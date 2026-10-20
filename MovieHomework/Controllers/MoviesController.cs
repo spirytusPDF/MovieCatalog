@@ -35,10 +35,10 @@ namespace MovieHomework.Controllers
             return Ok(movie);
         }
 
-        [HttpGet("/title/{title}")]
+        [HttpGet("by-title/{title}")]
         public IActionResult GetAMovieByTitle([FromRoute] string title)
         {
-            var movie = movies.FirstOrDefault(m => m.Title.Equals(title, StringComparison.OrdinalIgnoreCase));
+            var movie = movies.FirstOrDefault(m => m.Title.Contains(title, StringComparison.OrdinalIgnoreCase));
             if (movie == null)
             {
                 return NotFound("Movie not found.");
@@ -46,7 +46,7 @@ namespace MovieHomework.Controllers
             return Ok(movie);
         }
 
-        [HttpGet("/search/")]
+        [HttpGet("search")]
         public IActionResult GetAMovieByTitle([FromQuery] string genre, [FromQuery] double rating = 0)
         {
             var moviesFind = movies.Where(m => m.Genre.Contains(genre, StringComparison.OrdinalIgnoreCase) && m.Rating>=rating);
@@ -68,8 +68,8 @@ namespace MovieHomework.Controllers
             return Ok(movies);
         }
 
-        [HttpDelete]
-        public IActionResult DeleteMovie([FromBody] int id)
+        [HttpDelete("delete/{id:int:min(1)}")]
+        public IActionResult DeleteMovie([FromRoute]int id)
         {
             if (id <=0 ) return BadRequest();
             var movie = movies.FirstOrDefault(m => m.Id == id);

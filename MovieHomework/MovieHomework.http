@@ -1,6 +1,30 @@
-@MovieHomework_HostAddress = http://localhost:5206
+@hostname = localhost
+@port =  7070
+@baseUrl = https://{{hostname}}:{{port}}/api
 
-GET {{MovieHomework_HostAddress}}/weatherforecast/
+GET {{baseUrl}}/movies
 Accept: application/json
 
 ###
+GET {{baseUrl}}/movies/1
+Accept: application/json
+###
+GET {{baseUrl}}/movies/by-title/scent
+Accept: application/json
+###
+GET {{baseUrl}}/movies/search?genre=drama&rating=9
+Accept: application/json
+###
+POST {{baseUrl}}/movies
+Content-Type: application/json
+
+{
+  "Id":4,
+  "Title":"newMovie",
+  "Year":2000,
+  "Genre":"default",
+  "Rating":0.1
+}
+###
+DELETE {{baseUrl}}/movies/delete/1
+Accept: application/json
